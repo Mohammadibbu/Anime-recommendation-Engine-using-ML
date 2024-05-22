@@ -32,6 +32,60 @@
     <!-- Overlay -->
     <div class="overlay fade-out"></div>
     <div class="overlay1 fade-out"></div>
+
+    <!-- anime details page -->
+
+    <div class="anime-details" id="anime-details">
+      <!-- <div class="anime-details" id="anime-details">
+        <div style="display: flex; justify-content: end" class="">
+          <i
+            class="fa fa-close"
+            style="font-size: 30px; color: rgb(95, 91, 91)"
+          ></i>
+        </div>
+        <div class="anime-details-div">
+          <div class="img">
+            <img
+              src="https://cdn.myanimelist.net/images/anime/1141/142503.jpg"
+              alt="img"
+            />
+          </div>
+          <div class="anime-details-list">
+            <h3 class="anime-title">Naruto</h3>
+            <h4>Anime synopsis</h4>
+            <i
+              >Moments before Naruto Uzumaki's birth, a huge demon known as the
+              Nine-Tailed Fox attacked Konohagakure, the Hidden Leaf Village,
+              and wreaked havoc. In order to put an end to the demon's rampage,
+              the leader of the village, the Fourth Hokage, sacrificed his life
+              and sealed the monstrous beast inside the newborn Naruto. In the
+              present, Naruto is a hyperactive and knuckle-headed ninja growing
+              up within Konohagakure. Shunned because of the demon inside him,
+              Naruto struggles to find his place in the village. His one burning
+              desire to become the Hokage and be acknowledged by the villagers
+              who despite him. However, while his goal leads him to unbreakable
+              bonds with lifelong friends, it also lands him in the crosshairs
+              of many deadly foes. [Written by MAL Rewrite]</i
+            >
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                color: rgb(38, 139, 139);
+                font-weight: 300;
+              "
+            >
+              <span>Year: 2002</span>
+              <span>Members: 2857629</span>
+              <span>Episodes: 220</span>
+              <span>Popularity: 8</span>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+    <!-- ----------------------------------------------------------------------------------------------------------- -->
     <!-- loginpage/signup page here............... -->
     <div class="wrapper none" id="loginForm">
       <div class="close" style="float: right">
@@ -54,12 +108,21 @@
         </div>
         <div class="form-inner">
           <form action="/submit" method="post" class="login">
-            <input type="hidden" name="action" value="login">
             <div class="field">
-              <input type="text" placeholder="Email Address" id="email" name="email" required />
+              <input
+                type="text"
+                id="login_email"
+                placeholder="Email Address"
+                required
+              />
             </div>
             <div class="field">
-              <input type="password" placeholder="Password" id="password" name="password" required />
+              <input
+                type="password"
+                id="login_password"
+                placeholder="Password"
+                required
+              />
             </div>
             <div class="pass-link"><a href="#">Forgot password?</a></div>
             <div class="field btn">
@@ -70,17 +133,31 @@
               Not a member? <a href="">Signup now</a>
             </div>
           </form>
-          <form action="/submit" method="POST" class="signup">
-            <input type="hidden" name="action" value="signup">
+          <form action="/submit" method="post" class="signup">
             <div class="field">
-              <input type="text" id="name" name="name" placeholder="User Name" required />
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="User Name"
+                required
+              />
             </div>
             <div class="field">
-              <input type="text" id="email" name="email" placeholder="Email Address" required />
+              <input
+                type="text"
+                id="signup_email"
+                placeholder="Email Address"
+                required
+              />
             </div>
             <div class="field">
-            <div class="field">
-              <input type="password" id="password" name="password"  placeholder="Password" required />
+              <input
+                type="password"
+                id="signup_password"
+                placeholder="Password"
+                required
+              />
             </div>
             <div class="field">
               <input type="password" placeholder="Confirm password" required />
@@ -110,15 +187,7 @@
             <a href="#">Home</a><a href="#container">Get Recommendation</a
             ><a href="#">About</a><a href="#">Contact</a>
           </div>
-          <!-- Search Bar -->
-          <!-- <div class="search-bar">
-            <input
-              type="text"
-              placeholder="Search for anime..."
-              id="searchInput"
-            />
-            <button onclick="searchAnime()" class="search-btn">Search</button>
-          </div> -->
+
           <!-- CTA Button -->
           <a href="#" class="button hide-for-mobile reg_page" id="reg"
             >sign up</a
@@ -173,16 +242,17 @@
 
           <div class="error none" id="error">No recommendation Found</div>
           <div class="anime-list" id="recommendations">
-            <!-- <div class="anime-item">
+            <!-- <div class="anime-item" id="1" onclick="show_anime_details(this)">
               <img
                 src="/static/media/loadingSkeleton.svg"
                 alt="naruto: shippuuden"
                 class="zoom-effect"
               />
-              <h3 style="color:black">naruto: shippuuden</h3>
+              <h3 style="color: black">naruto: shippuuden</h3>
               <p style="color: red"></p>
               <h4>Rating :7.94</h4>
             </div> -->
+
             <!-- Anime items will be injected here by JavaScript -->
           </div>
         </div>

@@ -94,20 +94,18 @@ h2 {
   text-align: center;
   box-shadow: 2px 2px 3px black;
 }
-.anime-item:hover{
+.anime-item:hover {
   box-shadow: 3px 8px 7px black;
   animation-name: sample;
   animation-duration: 1s;
-  
 }
 @keyframes sample {
-  from{
-    transform: scale(1.0);
+  from {
+    transform: scale(1);
   }
-  to{
+  to {
     transform: scale(1.1);
   }
-  
 }
 
 .anime-item img {
@@ -142,6 +140,70 @@ h2 {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   text-decoration: none;
+}
+
+/* <div class="anime-details" id="anime-details"> */
+
+.anime-details {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  min-width: 400px; /* Set a minimum width */
+  max-width: 500px; /* Set a minimum width */
+  background-color: #fff;
+  border-radius: 10px;
+  margin-top: 50vh;
+  margin-bottom: 50vh;
+  z-index: 11;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Rest of the CSS styles remain the same */
+
+.anime-details .anime-details-div {
+  padding: 20px;
+}
+
+.anime-details .anime-details-div .img img {
+  width: 50%;
+  border-radius: 10px 10px 0 0;
+}
+
+.anime-details .anime-details-div .anime-details-list {
+  margin-top: 20px;
+}
+
+.anime-details .anime-details-div .anime-details-list h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.anime-details .anime-details-div .anime-details-list h4 {
+  margin: 10px 0 5px;
+  font-size: 16px;
+  color: #666;
+}
+
+.anime-details .anime-details-div .anime-details-list i {
+  color: #444;
+}
+
+.anime-details .anime-details-div .anime-details-list span {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #777;
+}
+
+.anime-details .anime-details-div .anime-details-list .fa-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px; /* Adjust icon size */
+  cursor: pointer;
 }
 
 /* Responsive Design */
