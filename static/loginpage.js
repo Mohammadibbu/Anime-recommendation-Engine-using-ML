@@ -6,6 +6,7 @@ const signupLink = document.querySelector("form .signup-link a");
 const loginForm_div = document.querySelector("#loginForm");
 
 const close_icon = document.querySelector(".close");
+close_icon.style.cursor = "pointer";
 close_icon.onclick = () => {
   overlay1.classList.remove("fade-in");
   loginForm_div.classList.add("none");
@@ -24,11 +25,13 @@ overlay1.onclick = () => {
 document.querySelector("#reg").onclick = () => {
   overlay1.classList.add("fade-in");
   loginForm_div.classList.remove("none");
+  anime_details.classList.add("none");
   overlay1.classList.remove("fade-out");
 };
 document.querySelector("#reg_footer").onclick = () => {
   overlay1.classList.add("fade-in");
   loginForm_div.classList.remove("none");
+  anime_details.classList.add("none");
   overlay1.classList.remove("fade-out");
 };
 

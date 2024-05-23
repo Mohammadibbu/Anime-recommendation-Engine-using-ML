@@ -49,7 +49,8 @@ function show_anime_details(anime) {
     <div style="display: flex; justify-content: end" class="close1">
       <i class="fa fa-close" style="font-size: 30px; color: rgb(95, 91, 91)"></i>
     </div>
-    <div class="anime-details-div">
+    <div class="anime-details-div" id="animeDiv">
+   
       <div class="img">
         <img src="${anime.imageUrl}" alt="${anime.title}" />
       </div>
@@ -66,7 +67,10 @@ function show_anime_details(anime) {
       </div>
     </div>
   `;
+  document.documentElement.scrollTop = 2;
   const close_icon1 = document.querySelector(".close1");
+  close_icon1.style.cursor = "pointer";
+
   close_icon1.onclick = () => {
     overlay1.classList.remove("fade-in");
 
