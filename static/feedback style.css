@@ -53,8 +53,6 @@ textarea:focus {
 
 /* Button styles */
 button {
-  /* background-color: #007bff; */
-  /* background: linear-gradient(to right, #31d35c, #2bb7da); */
   background: linear-gradient(to right, #f436ba, #ff0068);
 
   color: #fff;
