@@ -57,7 +57,7 @@ def recommend():
 
 @app.route('/feedback')
 def feed():
-    return render_template('feed.html')
+    return render_template('feedback.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
