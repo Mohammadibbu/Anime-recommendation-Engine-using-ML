@@ -35,7 +35,7 @@ def get_cosine_similarity(df, title):
     
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:6]  # Get top 10 anime
+    sim_scores = sim_scores[1:6]  # Get top 5 anime
 
     anime_indices = [i[0] for i in sim_scores]
     return df.iloc[anime_indices]
@@ -57,7 +57,7 @@ def recommend():
 
 @app.route('/feedback')
 def feed():
-    return render_template('feed.html')
+    return render_template('feedback.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

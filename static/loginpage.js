@@ -12,7 +12,7 @@ import {
   update,
   signOut,
 } from "./firebaseConnection/firebaseDBconn.js";
-
+import { NotifyUser } from "./functions/functions.js";
 //get user id from session storage
 const userAuthUid = sessionStorage.getItem("userid<@#(1029384756)#@>");
 //sign up form
@@ -27,34 +27,6 @@ const loginBtn = document.querySelector("#login_btn");
 const loginPwd = document.querySelector("#login_password");
 const loginEmail = document.querySelector("#login_email");
 
-// Notify function to show success or error messages
-var notifyTimeout;
-
-function NotifyUser(ErrorType, message, duration) {
-  var errorMessage = document.getElementById("NotifyUser");
-
-  // Clear any existing timeout
-  clearTimeout(notifyTimeout);
-
-  errorMessage.innerHTML = "";
-
-  // Set message type and content
-  if (ErrorType === "success") {
-    errorMessage.classList.add("successMessage");
-    errorMessage.innerHTML = `<i class="fa fa-check" style="font-size:20px" aria-hidden="true"></i> ${message}`;
-  } else {
-    errorMessage.classList.add("errorMessage");
-    errorMessage.innerHTML = `<i class="fa fa-exclamation-circle" style="font-size:20px" aria-hidden="true"></i> ${message}`;
-  }
-
-  // Show the message and hide it after the duration
-  errorMessage.classList.remove("none");
-  notifyTimeout = setTimeout(() => {
-    errorMessage.classList.add("none");
-    errorMessage.classList.remove("errorMessage", "successMessage");
-    errorMessage.innerHTML = "";
-  }, duration);
-}
 //Forgot password
 const ForgotPassword = (email) => {
   // Reference to the Firebase Realtime Database
@@ -63,37 +35,42 @@ const ForgotPassword = (email) => {
   // Query the database for the provided email
   const query = ref(connectDB, `users`);
 
-  get(query).then((snapshot) => {
-    let emailExists = false;
-    snapshot.forEach((childSnapshot) => {
-      const childData = childSnapshot.val();
-      if (childData.email === email.value) {
-        emailExists = true;
+  get(query)
+    .then((snapshot) => {
+      let emailExists = false;
+      snapshot.forEach((childSnapshot) => {
+        const childData = childSnapshot.val();
+        if (childData.email === email.value) {
+          emailExists = true;
+        }
+      });
+
+      if (emailExists) {
+        // If email exists, send the password reset email
+        sendPasswordResetEmail(auth, email.value)
+          .then(() => {
+            NotifyUser(
+              "success",
+              "Password recovery mail sent successfully.",
+              3000
+            );
+            email.value = "";
+          })
+          .catch((e) => {
+            NotifyUser("error", e.message, 3000);
+            console.log(e);
+            handleAuthError(e);
+          });
+      } else {
+        // If email does not exist, show an error message
+        NotifyUser("error", "Email address not found.", 3000);
       }
+    })
+    .catch((e) => {
+      console.error("Error checking email existence", e);
+      NotifyUser("error", "Something went wrong. Please try again.", 3000);
     });
-
-    if (emailExists) {
-      // If email exists, send the password reset email
-      sendPasswordResetEmail(auth, email.value)
-        .then(() => {
-          NotifyUser("success", "Password recovery mail sent successfully.", 3000);
-          email.value = "";
-        })
-        .catch((e) => {
-          NotifyUser("error", e.message, 3000);
-          console.log(e);
-          handleAuthError(e);
-        });
-    } else {
-      // If email does not exist, show an error message
-      NotifyUser("error", "Email address not found.", 3000);
-    }
-  }).catch((e) => {
-    console.error("Error checking email existence", e);
-    NotifyUser("error", "Something went wrong. Please try again.", 3000);
-  });
 };
-
 
 // Function to save user data to the database
 const saveUserData = (uid, name, email, pwd, mailverification, loginValue) => {
@@ -426,33 +403,3 @@ document.querySelector(".overlay1").onclick = () => {
   document.querySelector("#loginForm").classList.add("none");
   document.querySelector("#anime-details").classList.add("none");
 };
-
-//-----------------ADD wishlist----------------------------------------
-const AddtowishList = (animeData, elem, uid) => {
-  // console.log(animeData);
-  const buttonElem = elem.children[0];
-
-  set(ref(connectDB, `users/${uid}/wishlist/${animeData.animeID}`), {
-    animeID: animeData.animeID,
-    animeName: animeData.title,
-    imageURL: animeData.imageUrl,
-    episodes: animeData.episodes,
-    year: animeData.year,
-    popularity: animeData.popularity,
-    TimeStamp: Date(),
-  })
-    .then(() => {
-      // console.log(elem.children[0]);
-      buttonElem.innerHTML = `<i class="fa fa-check" style="font-size:21px" ></i> Added`;
-      buttonElem.setAttribute("disabled", "true");
-      buttonElem.style.cursor = "not-allowed";
-      NotifyUser("success", "Added successfully....", 3000);
-    })
-    .catch((e) => {
-      console.error("Error ", e);
-      NotifyUser("error", "Something Went Wrong.. Please try Again! ", 3000);
-    });
-};
-//-------------------------------------------------
-
-export { AddtowishList, NotifyUser };

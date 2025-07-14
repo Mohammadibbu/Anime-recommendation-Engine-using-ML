@@ -8,46 +8,23 @@ import {
   update,
   auth,
 } from "../firebaseConnection/firebaseDBconn.js";
-
-// Notify function to show success or error messages
-var notifyTimeout;
-
-function NotifyUser(ErrorType, message, duration) {
-  var errorMessage = document.getElementById("NotifyUser");
-
-  // Clear any existing timeout
-  clearTimeout(notifyTimeout);
-
-  errorMessage.innerHTML = "";
-
-  // Set message type and content
-  if (ErrorType === "success") {
-    errorMessage.classList.add("successMessage");
-    errorMessage.innerHTML = `<i class="fa fa-check" style="font-size:20px" aria-hidden="true"></i> ${message}`;
-  } else {
-    errorMessage.classList.add("errorMessage");
-    errorMessage.innerHTML = `<i class="fa fa-exclamation-circle" style="font-size:20px" aria-hidden="true"></i> ${message}`;
-  }
-
-  // Show the message and hide it after the duration
-  errorMessage.classList.remove("none");
-  notifyTimeout = setTimeout(() => {
-    errorMessage.classList.add("none");
-    errorMessage.classList.remove("errorMessage", "successMessage");
-    errorMessage.innerHTML = "";
-  }, duration);
-}
-
+import { NotifyUser } from "../functions/functions.js";
 // change password function
 const ChangePassword = (email) => {
-  sendPasswordResetEmail(auth, email)
-    .then(() => {
-      NotifyUser("success", "Password recovery mail sent successfully.", 3000);
-    })
-    .catch((e) => {
-      NotifyUser("error", e.message, 3000);
-      console.log(e);
-    });
+  if (confirm("Are you sure you want to change your password?")) {
+    return sendPasswordResetEmail(auth, email)
+      .then(() => {
+        NotifyUser(
+          "success",
+          "Password recovery mail sent successfully.",
+          3000
+        );
+      })
+      .catch((e) => {
+        NotifyUser("error", e.message, 3000);
+        console.log(e);
+      });
+  }
 };
 
 // Fetch user data from Firebase
@@ -56,6 +33,8 @@ const uid = sessionStorage.getItem("userid<@#(1029384756)#@>");
 document.addEventListener("DOMContentLoaded", function () {
   var profileTable = document.getElementById("profileTable");
   var profileIcon = document.getElementById("profileIcon");
+  document.getElementById("Loading").classList.remove("none");
+
   document.getElementById("Loading").innerHTML = "Loading....";
 
   // Function to create a table row with user data
@@ -66,7 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     attributeCell.textContent = key;
     if (key === "password") {
-      valueCell.textContent = `*****${value.slice(4)}`;
+      valueCell.textContent = `${"*".repeat(value.length - 2)}${value.slice(
+        -2
+      )}`;
     } else if (key === "UserName") {
       valueCell.innerHTML = `
             <input type="text" id="nameField" value="${value}" readonly />
@@ -78,17 +59,27 @@ document.addEventListener("DOMContentLoaded", function () {
         if (nameField.hasAttribute("readonly")) {
           nameField.removeAttribute("readonly");
           nameField.focus();
+          nameField.classList.add("popup-input");
           editButton.textContent = "Save";
         } else {
           if (nameField.value === nameFieldval) {
-            NotifyUser("error", "No changes...", 3000);
+            nameField.classList.remove("popup-input");
+
+            NotifyUser("error", "No changes have been made", 3000);
+          } else if (nameField.value === "" || nameField.value === null) {
+            NotifyUser("error", "Username cannot be null", 3000);
+            nameField.focus();
+
+            return;
           } else {
+            nameField.classList.remove("popup-input");
+
             update(ref(connectDB, "users/" + uid), {
               UserName: nameField.value,
             })
               .then(() => {
-                NotifyUser("success", "User name updated", 3000);
-                console.log("User name updated.");
+                NotifyUser("success", "Username changed successfully", 3000);
+                console.log("Username changed successfully.");
               })
               .catch((e) => {
                 console.error("Error updating user name", e);
@@ -106,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to populate the profile table
   function populateProfileTable(userData) {
     const loadingElement = document.getElementById("Loading");
+    loadingElement.classList.add("none");
     loadingElement.innerHTML = "";
     document.querySelector(".container").classList.remove("none");
     for (let key in userData) {
@@ -181,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error(error);
       });
   }
-  
+
   if (uid) {
     get(child(ref(connectDB), "users/" + uid))
       .then((snapshot) => {
@@ -198,24 +190,25 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Event listener for the change password button
-  document.querySelector(".change-password-btn").addEventListener("click", () => {
-    if (uid) {
-      get(child(ref(connectDB), "users/" + uid))
-        .then((snapshot) => {
-          let userData = snapshot.val();
-          if (userData && userData.email) {
-            ChangePassword(userData.email);
-          } else {
-            NotifyUser("error", "Email not found for the user.", 3000);
-          }
-        })
-        .catch((error) => {
-          NotifyUser("error", "Error fetching user data.", 3000);
-          console.error("Error fetching user data:", error);
-        });
-    } else {
-      NotifyUser("error", "User ID not found.", 3000);
-    }
-  });
-
+  document
+    .querySelector(".change-password-btn")
+    .addEventListener("click", () => {
+      if (uid) {
+        get(child(ref(connectDB), "users/" + uid))
+          .then((snapshot) => {
+            let userData = snapshot.val();
+            if (userData && userData.email) {
+              ChangePassword(userData.email);
+            } else {
+              NotifyUser("error", "Email not found for the user.", 3000);
+            }
+          })
+          .catch((error) => {
+            NotifyUser("error", "Error fetching user data.", 3000);
+            console.error("Error fetching user data:", error);
+          });
+      } else {
+        NotifyUser("error", "User ID not found.", 3000);
+      }
+    });
 });
