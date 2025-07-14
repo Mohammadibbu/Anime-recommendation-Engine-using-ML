@@ -504,6 +504,181 @@ h2::after {
   transition: var(--transition-smooth);
 }
 
+/* Footer Improvements */
+.footer {
+  background: var(--dark-gradient);
+  color: white;
+  padding: 4rem 0 2rem;
+  margin-top: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
+}
+
+.footer .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.footer-logo h3 {
+  background: var(--primary-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.footer-social-media {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.footer-social-media a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: var(--transition-smooth);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-social-media a:hover {
+  background: rgba(244, 54, 186, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(244, 54, 186, 0.3);
+}
+
+.footer-social-media a svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+  transition: var(--transition-smooth);
+}
+
+.footer-social-media a:hover svg {
+  fill: #f436ba;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: var(--transition-smooth);
+  border-radius: var(--border-radius-small);
+}
+
+.footer-links a:hover {
+  color: #f436ba;
+  padding-left: 0.5rem;
+  background: rgba(244, 54, 186, 0.1);
+}
+
+.footer-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-cta .button {
+  background: var(--primary-gradient);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-light);
+}
+
+.footer-cta .button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.footer-copyright {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.attribution {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+.attribution .social-media {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.attribution .social-media li a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: var(--transition-smooth);
+}
+
+.attribution .social-media li a:hover {
+  background: rgba(244, 54, 186, 0.2);
+  transform: translateY(-2px);
+}
+
+.attribution .social-media li a img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+  transition: var(--transition-smooth);
+}
+
+.attribution .social-media li a:hover img {
+  filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(300deg);
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -724,28 +899,6 @@ button:active,
   transform: translateX(4px);
 }
 
-/* Footer Improvements */
-.footer {
-  background: var(--dark-gradient);
-  color: white;
-  padding: 3rem 0 1rem;
-  margin-top: 4rem;
-}
-
-.footer .footer-social-media a {
-  transition: var(--transition-smooth);
-  padding: 8px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.footer .footer-social-media a:hover {
-  background: rgba(244, 54, 186, 0.2);
-  transform: translateY(-3px);
-}
-
 /* Additional Modern Touches */
 .container {
   padding-right: 1.5rem;
@@ -859,6 +1012,20 @@ button:active,
 
   .search-bar input {
     max-width: 100%;
+  }
+
+  .footer .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .footer-social-media {
+    justify-content: center;
+  }
+
+  .attribution .social-media {
+    flex-wrap: wrap;
   }
 }
 
