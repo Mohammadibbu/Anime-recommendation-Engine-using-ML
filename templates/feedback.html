@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,53 +46,3 @@
     ></script>
   </body>
 </html>
-=======
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FeedBack Form</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='feedback style.css')
-    }}"
-    />
-  </head>
-  <body>
-    <div id="NotifyUser" class="none">Notification message goes here</div>
-
-    <h1>FeedBack Form</h1>
-    <div id="container">
-      <form id="form">
-        <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Enter you name..."
-        /><br />
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter email id ..."
-        /><br />
-        <textarea
-          name="des"
-          id="des"
-          cols="40"
-          rows="8"
-          placeholder="Enter your thoughts....."
-        ></textarea
-        ><br />
-        <button id="submit" type="submit">submit</button>
-      </form>
-    </div>
-
-    <script
-      type="module"
-      src="{{ url_for('static', filename='feedback script.js') }}"
-    ></script>
-  </body>
-</html>
->>>>>>> b0b1a2c77e2a62a5624fdfc893a022ddcae2ccc1
