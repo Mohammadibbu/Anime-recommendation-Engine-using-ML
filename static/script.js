@@ -272,3 +272,58 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(el);
   });
 });
+// Enhanced anime details modal animation
+function showAnimeDetails(anime) {
+  overlay1.classList.add("fade-in");
+  animeDetails.classList.remove("none");
+  overlay1.classList.remove("fade-out");
+  
+  // Add show class for smooth animation
+  requestAnimationFrame(() => {
+    animeDetails.classList.add("show");
+  });
+  
+  animeDetails.innerHTML = `
+    <div style="display: flex; justify-content: end" class="close1">
+      <i class="fa fa-close" style="font-size: 30px; color: rgb(95, 91, 91); cursor: pointer; transition: all 0.3s ease;"></i>
+    </div>
+    <div class="anime-details-div" id="animeDiv">
+      <div class="img">
+        <img src="${anime.imageUrl}" alt="${anime.title}" style="animation: fadeInUp 0.6s ease-out;" />
+      </div>
+      <div class="anime-details-list" style="animation: fadeInUp 0.6s ease-out 0.2s both;">
+        <h3 class="anime-title">${anime.title}</h3>
+        <h4>Anime synopsis</h4>
+        <i>${anime.description}</i>
+        <div style="display: flex; flex-direction: column; color: rgb(38, 139, 139); font-weight: 300;">
+          <span>Year: ${anime.year}</span>
+          <span>Members: ${anime.members}</span>
+          <span>Episodes: ${anime.episodes}</span>
+          <span>Popularity: ${anime.popularity}</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.documentElement.scrollTop = 2;
+
+  // Close icon event listener with hover effect
+  const closeIcon1 = document.querySelector(".close1 i");
+  closeIcon1.addEventListener('mouseenter', () => {
+    closeIcon1.style.transform = 'scale(1.1) rotate(90deg)';
+    closeIcon1.style.color = '#f436ba';
+  });
+  closeIcon1.addEventListener('mouseleave', () => {
+    closeIcon1.style.transform = 'scale(1) rotate(0deg)';
+    closeIcon1.style.color = 'rgb(95, 91, 91)';
+  });
+  
+  closeIcon1.onclick = () => {
+    animeDetails.classList.remove("show");
+    overlay1.classList.remove("fade-in");
+    overlay1.classList.add("fade-out");
+    setTimeout(() => {
+      animeDetails.classList.add("none");
+    }, 300);
+  };
+}

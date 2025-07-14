@@ -109,6 +109,19 @@ body {
   font-family: "Inter", sans-serif;
   background: linear-gradient(135deg, #fafbfc 0%, #f8f9ff 100%);
   min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23f436ba" opacity="0.03"/><circle cx="75" cy="75" r="1" fill="%23ff0068" opacity="0.03"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Modern Search Bar */
@@ -198,6 +211,7 @@ body {
   transition: var(--transition-smooth);
   overflow: hidden;
   animation: fadeInUp 0.6s ease-out both;
+  cursor: pointer;
 }
 
 .anime-item::before {
@@ -377,6 +391,7 @@ h2::after {
   transition: var(--transition-smooth);
   border-radius: var(--border-radius-small);
   position: relative;
+  text-decoration: none;
 }
 
 .header .main-navigation a:hover {
@@ -393,17 +408,6 @@ h2::after {
   align-items: center;
   position: relative;
   overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23f436ba" opacity="0.05"/><circle cx="75" cy="75" r="1" fill="%23ff0068" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-  pointer-events: none;
 }
 
 .hero .hero-text {
@@ -628,6 +632,8 @@ button,
   border: none;
   transition: var(--transition-smooth);
   box-shadow: var(--shadow-light);
+  text-decoration: none;
+  display: inline-block;
 }
 
 button:hover,
@@ -639,46 +645,6 @@ button:hover,
 button:active,
 .button:active {
   transform: translateY(0);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .anime-list {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-
-  #NotifyUser {
-    top: 1rem;
-    right: 1rem;
-    left: 1rem;
-    max-width: none;
-  }
-
-  .anime-details {
-    width: 95%;
-    max-height: 85vh;
-  }
-
-  .hero .hero-text h1 {
-    font-size: 2.5rem;
-  }
-
-  .search-bar input {
-    max-width: 100%;
-  }
-}
-
-@media (min-width: 938px) {
-  body {
-    font-size: 1rem;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
 }
 
 /* Profile Menu Improvements */
@@ -732,6 +698,12 @@ button:active,
   opacity: 1;
   transform: translateY(0) scale(1);
   visibility: visible;
+}
+
+.profile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .profile-menu ul li a {
@@ -859,6 +831,46 @@ button:active,
 
   .header .menu.open > span:last-child {
     transform: rotate(-45deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .anime-list {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  #NotifyUser {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+
+  .anime-details {
+    width: 95%;
+    max-height: 85vh;
+  }
+
+  .hero .hero-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .search-bar input {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 938px) {
+  body {
+    font-size: 1rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 }
 
