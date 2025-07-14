@@ -56,6 +56,10 @@ const animeDetails = document.getElementById("anime-details");
 function showAnimeDetails(anime) {
   overlay1.classList.add("fade-in");
   animeDetails.classList.remove("none");
+  // Add show class for animation
+  setTimeout(() => {
+    animeDetails.classList.add("show");
+  }, 10);
   overlay1.classList.remove("fade-out");
   animeDetails.innerHTML = `
     <div style="display: flex; justify-content: end" class="close1">
@@ -84,9 +88,12 @@ function showAnimeDetails(anime) {
   const closeIcon1 = document.querySelector(".close1");
   closeIcon1.style.cursor = "pointer";
   closeIcon1.onclick = () => {
+    animeDetails.classList.remove("show");
     overlay1.classList.remove("fade-in");
-    animeDetails.classList.add("none");
     overlay1.classList.add("fade-out");
+    setTimeout(() => {
+      animeDetails.classList.add("none");
+    }, 300);
   };
 }
 
@@ -165,6 +172,9 @@ document
           data.forEach((anime) => {
             const animeItem = document.createElement("div");
             animeItem.classList.add("anime-item");
+            // Add stagger animation delay
+            const index = Array.from(recommendationsDiv.children).length;
+            animeItem.style.animationDelay = `${index * 0.1}s`;
             animeItem.innerHTML = `
             <div>
             <img src="/static/media/loadingSkeleton.svg" alt="${anime.title}" class="zoom-effect">
@@ -230,3 +240,35 @@ document
         );
       });
   });
+
+// Add scroll effect to header
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('.header');
+  if (window.scrollY > 100) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// Add intersection observer for animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, observerOptions);
+
+// Observe elements for animation
+document.addEventListener('DOMContentLoaded', () => {
+  const animatedElements = document.querySelectorAll('.anime-item, h2, .hero-text');
+  animatedElements.forEach(el => {
+    observer.observe(el);
+  });
+});
